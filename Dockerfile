@@ -23,8 +23,8 @@ RUN rm -rf /etc/yum.repos.d/* \
 
 COPY --from=reposubi /etc/yum.repos.d/ubi.repo /etc/yum.repos.d/ubi.repo
 
-ENV JAVA_HOME="/usr/lib/jvm/java" \
-  PATH=${PATH}:/usr/lib/jvm/java \
+ENV JAVA_HOME="/usr/lib/jvm/jre-11-openjdk" \
+  PATH=${PATH}:/usr/lib/jvm/jre-11-openjdk/bin/ \
   LANG=en_US.UTF-8 \
   LC_ALL=en_US.UTF-8
 
@@ -39,7 +39,6 @@ RUN dnf install -y \
       bash \
       ca-certificates \
   && dnf -y clean all \
-  && rm -rf /var/cache/yum \
-  && ln -s /usr/lib/jvm/$(rpm -qa | grep java-11-openjdk | grep -v headless) /usr/lib/jvm/java
+  && rm -rf /var/cache/yum
 
 USER 1001
